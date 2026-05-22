@@ -36,27 +36,31 @@ anywhere on the screen edge.
 - **Click the dot to jump** — opens the matching Terminal.app tab via tty
   match (falls back to Prefs ▸ Terminals when ambiguous).
 
+## Repo layout
+
+```
+.
+├── app.py              PyObjC menu-bar/overlay app
+├── setstate.py         Hook script (writes per-session state)
+├── launcher.sh         Bundle entry point (Contents/MacOS/launcher)
+├── Info.plist          Bundle metadata
+├── ClaudeBlinker.icns  Icon
+├── hooks-example.json  Drop-in snippet for ~/.claude/settings.json
+└── scripts/build.sh    Assembles dist/ClaudeBlinker.app from the above
+```
+
+`dist/` is gitignored; build it locally.
+
 ## Install
 
-1. Move/copy `ClaudeBlinker.app` somewhere persistent (e.g. `/Applications`).
-2. Edit `~/.claude/settings.json` to wire the hooks (see `hooks-example.json`
-   in this repo or copy from the snippets below).
-3. Double-click the app once to launch it; it lives in the menu bar from then on.
-
-### Hook snippet
-
-```json
-{
-  "hooks": {
-    "SessionStart":     [{ "hooks": [{ "type": "command", "command": "/usr/bin/python3 /path/to/ClaudeBlinker.app/Contents/Resources/hooks/setstate.py idle"     }] }],
-    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "/usr/bin/python3 /path/to/ClaudeBlinker.app/Contents/Resources/hooks/setstate.py thinking" }] }],
-    "PreToolUse":       [{ "hooks": [{ "type": "command", "command": "/usr/bin/python3 /path/to/ClaudeBlinker.app/Contents/Resources/hooks/setstate.py coding"   }] }],
-    "PostToolUse":      [{ "hooks": [{ "type": "command", "command": "/usr/bin/python3 /path/to/ClaudeBlinker.app/Contents/Resources/hooks/setstate.py thinking" }] }],
-    "Notification":     [{ "hooks": [{ "type": "command", "command": "/usr/bin/python3 /path/to/ClaudeBlinker.app/Contents/Resources/hooks/setstate.py waiting"  }] }],
-    "Stop":             [{ "hooks": [{ "type": "command", "command": "/usr/bin/python3 /path/to/ClaudeBlinker.app/Contents/Resources/hooks/setstate.py done"     }] }]
-  }
-}
+```bash
+./scripts/build.sh
+mv dist/ClaudeBlinker.app /Applications/   # or anywhere persistent
 ```
+
+Merge `hooks-example.json` into `~/.claude/settings.json` (it assumes the
+bundle lives at `/Applications/ClaudeBlinker.app` — adjust if you put it
+elsewhere). Then double-click the app; it lives in the menu bar from then on.
 
 ## Requirements
 
