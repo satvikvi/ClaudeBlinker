@@ -114,3 +114,7 @@ tile off, and revoke the Automation permission in System Settings → Privacy
   yet.
 - Clicks landing exactly on a screen edge or corner can be eaten by macOS
   gestures — reposition the dot via the Position slider if this bites.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
