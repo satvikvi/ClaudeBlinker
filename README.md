@@ -54,20 +54,56 @@ anywhere on the screen edge.
 ## Install
 
 ```bash
-./scripts/build.sh
-mv dist/ClaudeBlinker.app /Applications/   # or anywhere persistent
+./scripts/build.sh                            # produces dist/ClaudeBlinker.app
+cp -R dist/ClaudeBlinker.app /Applications/   # or anywhere persistent
+open /Applications/ClaudeBlinker.app          # first run: lives in menu bar
 ```
 
 Merge `hooks-example.json` into `~/.claude/settings.json` (it assumes the
 bundle lives at `/Applications/ClaudeBlinker.app` — adjust if you put it
-elsewhere). Then double-click the app; it lives in the menu bar from then on.
+elsewhere). The first click on the floating dot will trigger a macOS
+Automation permission prompt for Terminal — click **OK**.
+
+## Update
+
+After editing source files, rebuild and reinstall:
+
+```bash
+./scripts/build.sh && cp -R dist/ClaudeBlinker.app /Applications/
+pkill -f "ClaudeBlinker.app/Contents/Resources/app.py"
+open /Applications/ClaudeBlinker.app
+```
+
+### Dev workflow (skip the bundle)
+
+If you iterate on `setstate.py` often, point the hooks at the source file
+directly so changes go live without rebuilding:
+
+```
+/usr/bin/python3 /path/to/claude-blinker/setstate.py <state>
+```
+
+For `app.py` changes you still need to rebuild + relaunch, since the bundle
+loads it once at startup.
+
+## Uninstall
+
+```bash
+pkill -f "ClaudeBlinker.app/Contents/Resources/app.py"
+rm -rf /Applications/ClaudeBlinker.app
+rm -rf ~/.claude-blinker                      # runtime state (sessions, config)
+```
+
+Then remove the 6 hook entries from `~/.claude/settings.json`, drag the Dock
+tile off, and revoke the Automation permission in System Settings → Privacy
+& Security → Automation.
 
 ## Requirements
 
 - macOS 11 +
 - A Python 3 install with `pyobjc` available
-  (default: `/opt/anaconda3/bin/python3` — change the path in
-  `Contents/MacOS/launcher` if you use a different interpreter).
+  (default: `/opt/anaconda3/bin/python3` — change the path in `launcher.sh`
+  if you use a different interpreter, then rebuild).
 
 ## Known caveats
 
