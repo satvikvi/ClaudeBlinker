@@ -4,6 +4,35 @@ A tiny macOS menu-bar utility that surfaces the live state of every Claude Code
 session you have open, across every terminal, as a coloured dot you can park
 anywhere on the screen edge.
 
+## Screenshots
+
+Blinker settings: dot size, blink speed, and screen-edge position.
+
+![Blinker settings tab](docs/screenshots/blinker-settings.png)
+
+Terminals tab: pick which sessions drive the dot.
+
+![Terminals tab](docs/screenshots/terminals.png)
+
+## Use cases
+
+- **Several Claude terminals at once.** Frontend in one tab, backend in
+  another, tests in a third. You can't watch them all. The dot tells you
+  which one needs you and the menu-bar icon shows the aggregate state.
+- **Long-running turns.** Claude is grinding on a refactor or a test run.
+  You jump to email or Slack. The dot turns green when it's done so you
+  don't keep tabbing back to check.
+- **Permission prompts you'd otherwise miss.** A prompt for Bash or Edit can
+  sit for minutes while you assume Claude is still thinking. The dot flips
+  to blinking red within four seconds of the stall.
+- **Multi-monitor or fullscreen.** The dot floats above fullscreen apps and
+  follows you across spaces, so you see state changes even when your
+  terminal isn't on the active screen.
+- **Click to jump.** Tap the dot to bring the matching Terminal tab to the
+  front. No more hunting through windows.
+
+## States
+
 | State    | Colour  | Meaning                                          |
 | -------- | ------- | ------------------------------------------------ |
 | idle     | hidden  | No active session, or all sessions are quiet     |
