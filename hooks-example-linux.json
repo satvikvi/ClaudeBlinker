@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "python3 ~/.local/share/claude-blinker/hooks/setstate.py idle" }] }
+    ],
+    "UserPromptSubmit": [
+      { "hooks": [{ "type": "command", "command": "python3 ~/.local/share/claude-blinker/hooks/setstate.py thinking" }] }
+    ],
+    "PreToolUse": [
+      { "hooks": [{ "type": "command", "command": "python3 ~/.local/share/claude-blinker/hooks/setstate.py coding" }] }
+    ],
+    "PostToolUse": [
+      { "hooks": [{ "type": "command", "command": "python3 ~/.local/share/claude-blinker/hooks/setstate.py thinking" }] }
+    ],
+    "Notification": [
+      { "hooks": [{ "type": "command", "command": "python3 ~/.local/share/claude-blinker/hooks/setstate.py waiting" }] }
+    ],
+    "Stop": [
+      { "hooks": [{ "type": "command", "command": "python3 ~/.local/share/claude-blinker/hooks/setstate.py done" }] }
+    ]
+  }
+}
